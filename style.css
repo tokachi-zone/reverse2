@@ -1,0 +1,8 @@
+div {
+  margin: 5px;
+  width: 100px;
+}
+
+div > * {
+  width: 100%;
+}
