@@ -1,8 +1,18 @@
-div {
-  margin: 5px;
-  width: 100px;
+body {
+  font-family: sans-serif;
 }
 
-div > * {
-  width: 100%;
+div {
+  margin: 5px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.container input, select, button {
+  width: 230px;
+  height: 50px;
+  font-size: 18px;
 }
