@@ -42,6 +42,20 @@
             <button id="clear">すべての石を取り除く</button>
           </div>
         </div>
+
+        <div class="section">
+          <h3>Mode</h3>
+          <form>
+            <div>
+              <input name="limit" value="unlimit" type="radio" checked>
+              <label>移動を制限しない（好きなだけ移動可能）</label>
+            </div>
+            <div>
+              <input name="limit" value="limit" type="radio">
+              <label>移動を制限する（レベルに応じた距離だけ移動可能）</label>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <script src="./src/index.js"></script>

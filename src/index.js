@@ -6,12 +6,19 @@
 
   const game = {
     mode: 'play',
+    free_move: true,
+    left_count: 0,
   };
 
   const mouse = {
-    x: 0,
-    y: 0,
+    x: -1,
+    y: -1,
     selecting: false,
+    reset: function() {
+      this.x = -1;
+      this.y = -1;
+      this.selecting = false;
+    }
   };
 
   /* Temporal */
@@ -177,6 +184,7 @@
   canvas.addEventListener('click', () => {
     if (game.mode === 'play') {
       mouse.selecting = !mouse.selecting;
+      if (mouse.selecting) game.left_count = game_stage[mouse.y][mouse.x].height;
       return;
     }
 
@@ -204,13 +212,15 @@
   });
 
   document.querySelector('#put').addEventListener('click', ({ target }) => {
-    mouse.selecting = false;
+    // mouse.selecting = false;
+    mouse.reset();
     toggle_put_mode(target);
     render_gui(context, game_stage);
   });
 
   document.querySelector('#remove').addEventListener('click', ({ target }) => {
-    mouse.selecting = false;
+    // mouse.selecting = false;
+    mouse.reset();
     toggle_remove_mode(target);
     render_gui(context, game_stage);
   });
@@ -233,6 +243,16 @@
     render_gui(context, game_stage);
   });
 
+  document.querySelector('[value="limit"]').addEventListener('click', () => {
+    // console.log('k')
+    game.free_move = false;
+  });
+
+  document.querySelector('[value="unlimit"]').addEventListener('click', () => {
+    // console.log('k')
+    game.free_move = true;
+  });
+
   document.addEventListener('keydown', ({ key }) => {
     if (!mouse.selecting) return;
     // console.log('key', key);
@@ -240,27 +260,36 @@
     switch (key.toLocaleLowerCase()) {
       case 'w': {
         move(game_stage, mouse.x, mouse.y, 0, -1);
+        game.left_count -= 1;
         mouse.y -= 1;
         break;
       }
 
       case 'a': {
         move(game_stage, mouse.x, mouse.y, -1, 0);
+        game.left_count -= 1;
         mouse.x -= 1;
         break;
       }
 
       case 's': {
         move(game_stage, mouse.x, mouse.y, 0, 1);
+        game.left_count -= 1;
         mouse.y += 1;
         break;
       }
 
       case 'd': {
         move(game_stage, mouse.x, mouse.y, 1, 0);
+        game.left_count -= 1;
         mouse.x += 1;
         break;
       }
+    }
+
+    if (!game.free_move && game.left_count === 0) {
+      // mouse.selecting = false;
+      mouse.reset();
     }
 
     render_gui(context, game_stage);
