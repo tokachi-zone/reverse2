@@ -77,16 +77,16 @@
           draw_stone_and_level(document.querySelector('input').value, dx, dy);
         }
 
-        if (game.mode === 'remove' && selecting) {
-          context.fillStyle = 'red';
-          draw_stone_and_level('!', dx, dy);
-        }
+        // if (game.mode === 'remove' && selecting) {
+        //   context.fillStyle = 'red';
+        //   draw_stone_and_level('!', dx, dy);
+        // }
 
         // stone
         if (cell.height > 0) {
-          if (selecting && game.mode !== 'play') return;
-          context.fillStyle = selecting && game.mode === 'play' ? '#c00' : cell.color;
-          draw_stone_and_level(cell.height, dx, dy);
+          if (selecting && game.mode === 'put') return;
+          context.fillStyle = selecting ? game.mode === 'play' ? '#c00'  : 'red' : cell.color;
+          draw_stone_and_level(game.mode === 'remove' && selecting ? '!' : cell.height, dx, dy);
         }
       });
     });
@@ -186,7 +186,7 @@
         height: Number(document.querySelector('input').value),
       };
   
-      toggle_put_mode(document.querySelector('#put'));
+      // toggle_put_mode(document.querySelector('#put'));
       return;
     }
 
@@ -196,7 +196,7 @@
         height : 0,
       };
 
-      toggle_remove_mode(document.querySelector('#remove'));
+      // toggle_remove_mode(document.querySelector('#remove'));
       return;
     }
 
