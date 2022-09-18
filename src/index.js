@@ -1,6 +1,6 @@
 (() => {
   /* Params */
-  const size = 8;
+  let size = 8;
   const scale = 4;
   const px = 24;
 
@@ -81,7 +81,7 @@
 
         if (game.mode === 'put' && selecting) {
           context.fillStyle = '#333';
-          draw_stone_and_level(document.querySelector('input').value, dx, dy);
+          draw_stone_and_level(document.querySelector('#level').value, dx, dy);
         }
 
         // if (game.mode === 'remove' && selecting) {
@@ -152,7 +152,7 @@
   }
 
   const canvas = document.querySelector('canvas');
-  const context = canvas.getContext('2d');
+  let context = canvas.getContext('2d');
   canvas.width = size * px * scale;
   canvas.height = size * px * scale;
   context.scale(scale, scale);
@@ -191,7 +191,7 @@
     if (game.mode === 'put') {
       game_stage[mouse.y][mouse.x] = {
         color: document.querySelector('select').value,
-        height: Number(document.querySelector('input').value),
+        height: Number(document.querySelector('#level').value),
       };
   
       // toggle_put_mode(document.querySelector('#put'));
@@ -215,6 +215,19 @@
     // mouse.selecting = false;
     mouse.reset();
     toggle_put_mode(target);
+    render_gui(context, game_stage);
+  });
+
+  document.querySelector('#resize').addEventListener('click', () => {
+    // console.log('resize');
+    size = Number(document.querySelector('#size').value);
+
+    context = canvas.getContext('2d');
+    canvas.width = size * px * scale;
+    canvas.height = size * px * scale;
+    context.scale(scale, scale);
+
+    game_stage = init_game_stage(size);
     render_gui(context, game_stage);
   });
 
