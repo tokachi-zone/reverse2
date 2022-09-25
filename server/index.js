@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -48,6 +49,10 @@ app.use(express.static(`${__dirname}/view`));
 
 app.get('/' , (_, response) => {
   response.sendFile('index.html');
+});
+
+app.get('/game', (_, response) => {
+  response.sendFile('game/index.html');
 });
 
 io.on('connection', (socket) => {

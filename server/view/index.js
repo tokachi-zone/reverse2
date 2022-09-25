@@ -42,7 +42,7 @@
         padding: 10px;
         border-radius: 4px;
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1.5fr 1fr;
         width: 340px;
         margin: 10px 0;
       `;
@@ -118,6 +118,8 @@
 
     refreshButton.addEventListener('click', () => {
       socket.emit('get-rooms');
-    })
-  })
+    });
+  });
+
+  socket.emit('get-rooms');
 })();
